@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login Page !{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>Bienvenue dans le Support Ticket manager</h1>
+
+    Avez vous un compte ? 
+    <ul>
+        <li>Oui<a href="{{ 'login' }}">LOGIN</a></li>
+        <li>Non<a href="{{ 'register' }}">REGISTER</a></li>
+    </ul>
+</div>
+{% endblock %}

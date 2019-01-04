@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login Page !{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>REGISTER</h1>
+
+    {{ form_start(registerForm) }}
+        {{ form_row(registerForm.email) }}
+        {{ form_row(registerForm.password) }}
+
+        <button class="btn">Register</button>
+    {{ form_end(registerForm) }}
+</div>
+{% endblock %}
