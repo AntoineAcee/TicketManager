@@ -3,9 +3,25 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <div class="nav-wrap">
+            <div class="navbar">
+            {% if app.token.user != "anon." %}
+                <ul>
+                    <li><a href="{{ '' }}">Home</a></li>
+                    <li><a href="{{ 'logout' }}">Logout</a></li>
+                </ul>
+            {% else %}
+                <ul>
+                    <li><a href="{{ 'login' }}">Login</a></li>
+                    <li><a href="{{ 'register' }}">Register</a></li>
+                </ul>
+            {% endif %}
+            </div>
+        </div>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
