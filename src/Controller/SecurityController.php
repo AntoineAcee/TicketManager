@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use App\Entity\User;
 use App\Form\RegisterType;
@@ -30,16 +31,6 @@ class SecurityController extends AbstractController
                 'controller_name' => 'SecurityController',
             ]);
         }
-    }
-
-    /**
-     * @Route("/login", name="login")
-     */
-    public function login()
-    {
-        return $this->render('security/login.html.twig', [
-            'controller_name' => 'SecurityController',
-        ]);
     }
 
     /**
@@ -70,6 +61,22 @@ class SecurityController extends AbstractController
         return $this->render('security/register.html.twig', [
             'controller_name' => 'SecurityController',
             'registerForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/login", name="app_login")
+     */
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error
         ]);
     }
 }
