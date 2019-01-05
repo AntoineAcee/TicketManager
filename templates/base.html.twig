@@ -12,6 +12,7 @@
             {% if app.token.user != "anon." %}
                 <ul>
                     <li><a href="{{ '' }}">Home</a></li>
+                    <li><a href="{{ 'ticket/new' }}">New Ticket</a></li>
                     <li><a href="{{ 'logout' }}">Logout</a></li>
                 </ul>
             {% else %}

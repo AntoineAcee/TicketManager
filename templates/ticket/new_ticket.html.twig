@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <h1>New Ticket</h1>
+
+    {{ form_start(ticketForm) }}
+        {{ form_row(ticketForm.title) }}
+        {{ form_row(ticketForm.content) }}
+
+        <button class="btn">Register</button>
+    {{ form_end(ticketForm) }}
+{% endblock %}
