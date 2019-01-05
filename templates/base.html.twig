@@ -11,14 +11,14 @@
             <div class="navbar">
             {% if app.token.user != "anon." %}
                 <ul>
-                    <li><a href="{{ '' }}">Home</a></li>
-                    <li><a href="{{ 'ticket/new' }}">New Ticket</a></li>
-                    <li><a href="{{ 'logout' }}">Logout</a></li>
+                    <li><a href="{{ '/' }}">Home</a></li>
+                    <li><a href="{{ '/ticket/new' }}">New Ticket</a></li>
+                    <li><a href="{{ '/logout' }}">Logout</a></li>
                 </ul>
             {% else %}
                 <ul>
-                    <li><a href="{{ 'login' }}">Login</a></li>
-                    <li><a href="{{ 'register' }}">Register</a></li>
+                    <li><a href="{{ '/login' }}">Login</a></li>
+                    <li><a href="{{ '/register' }}">Register</a></li>
                 </ul>
             {% endif %}
             </div>
