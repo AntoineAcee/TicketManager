@@ -3,18 +3,21 @@
 {% block title %}Hello {{ controller_name }}!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Ticket {{ ticket.id }}</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {{ form_start(ticketForm) }}
+        {{ form_row(ticketForm.title) }}
+        {{ form_row(ticketForm.content) }}
 
-    This friendly message is coming from:
+        <button class="btn">Register</button>
+    {{ form_end(ticketForm) }}
+
     <ul>
-        <li>Your controller at <code><a href="{{ 'src/Controller/TicketController.php'|file_link(0) }}">src/Controller/TicketController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'templates/ticket/index.html.twig'|file_link(0) }}">templates/ticket/index.html.twig</a></code></li>
+        {% for message in ticket.messages %}
+        <li>
+            <h6>{{ message.title }}</h6>
+            <p>{{ message.content }}</p>
+        </li>
+        {% endfor %}
     </ul>
-</div>
 {% endblock %}

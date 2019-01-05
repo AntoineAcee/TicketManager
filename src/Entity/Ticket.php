@@ -113,4 +113,12 @@ class Ticket
 
         return $this;
     }
+
+    public function getFirstMessage(): Message
+    {
+        $messages = $this->getMessages();
+        foreach ($messages as $key => $message) {
+            return $message;
+        }
+    }
 }

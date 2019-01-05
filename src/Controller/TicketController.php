@@ -15,16 +15,6 @@ use App\Form\MessageType;
 class TicketController extends AbstractController
 {
     /**
-     * @Route("/ticket", name="ticket")
-     */
-    public function index()
-    {
-        return $this->render('ticket/index.html.twig', [
-            'controller_name' => 'TicketController',
-        ]);
-    }
-
-    /**
      * @Route("/ticket/new", name="new_ticket")
      */
     public function newTicket(Request $request): Response
@@ -54,6 +44,35 @@ class TicketController extends AbstractController
         return $this->render('ticket/new_ticket.html.twig', [
             'controller_name' => 'TicketController',
             'ticketForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/ticket/{id}", name="ticket_show")
+     */
+    public function showTicket(Request $request, $id): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ticket = $em->getRepository(Ticket::class)->findOneById($id);
+        $form = $this->createForm(MessageType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message = new Message();
+            $message->setTitle($form->get('title')->getData());
+            $message->setContent($form->get('content')->getData());
+            $ticket->addMessage($message);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($message);
+            $entityManager->persist($ticket);
+            $entityManager->flush();
+        }
+
+        return $this->render('ticket/index.html.twig', [
+            'controller_name' => 'TicketController',
+            'ticketForm' => $form->createView(),
+            'ticket' => $ticket,
         ]);
     }
 }

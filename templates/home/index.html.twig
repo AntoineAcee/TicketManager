@@ -6,18 +6,20 @@
 <div class="ticket-list">
     <h1>Home</h1>
 
-    {{ dump() }}
-    {% if tickets is defined %}
+    
+    {% if tickets is defined and tickets is not empty %}
         <ul>
-        {% for ticket in tickets %}
-            {% for message in ticket.messages %}
-                <li>
-                    <h6>{{ message.title }}</h6>
-                    <p>{{ message.content }}</p>
-                </li>
-            {% endfor %}
+        {% for message in firstMessages %}
+            <a href="ticket/{{ message.ticket.id }}">
+            <li>
+                <h6>{{ message.title }}</h6>
+                <p>{{ message.content }}</p>
+            </li>
+            </a>
         {% endfor %}
         </ul>
+    {% else %}
+        <p>Vous n'avez pas encore de tickets n'hésitez pas à en créer un <a href="{{ '/ticket/new' }}">ici</a> !</p>
     {% endif %}
 </div>
 {% endblock %}

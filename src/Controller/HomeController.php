@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Ticket;
 use App\Entity\User;
+use App\Entity\Message;
 
 class HomeController extends AbstractController
 {
@@ -29,10 +30,24 @@ class HomeController extends AbstractController
         $userId = $user->getId();
         $currentUser = $em->getRepository(User::class)->findOneById($userId);
         $tickets = $em->getRepository(Ticket::class)->findBy(["owner" => $currentUser]);
+
+        if (empty($tickets)) {
+            return $this->render('home/index.html.twig', [
+                'controller_name' => 'HomeController',
+                'curentUser' => $currentUser->getEmail(),
+                'tickets' => $tickets,
+            ]);
+        }
+
+        foreach ($tickets as $key => $ticket) {
+            $firstMessages[] = $ticket->getFirstMessage();
+        }
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'curentUser' => $currentUser->getEmail(),
             'tickets' => $tickets,
+            'firstMessages' => $firstMessages,
         ]);
     }
 }
