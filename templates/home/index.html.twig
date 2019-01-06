@@ -6,7 +6,6 @@
 <div class="ticket-list">
     <h1>Home</h1>
 
-    
     {% if tickets is defined and tickets is not empty %}
         <ul>
         {% for message in firstMessages %}
@@ -16,6 +15,9 @@
                 <p>{{ message.content }}</p>
             </li>
             </a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="ticket/delete/{{ message.ticket.id }}">Delete</a>
+            {% endif %}
         {% endfor %}
         </ul>
     {% else %}

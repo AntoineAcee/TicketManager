@@ -26,6 +26,8 @@ class UserFixtures extends Fixture
             'azerty'
         ));
 
+        $user->setRoles(["ROLE_ADMIN"]);
+
         $manager->persist($user);
         $manager->flush();
     }

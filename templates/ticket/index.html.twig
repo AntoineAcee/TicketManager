@@ -17,6 +17,9 @@
         <li>
             <h6>{{ message.title }}</h6>
             <p>{{ message.content }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="/message/delete/{{ message.id }}">Delete</a>
+            {% endif %}
         </li>
         {% endfor %}
     </ul>

@@ -29,7 +29,12 @@ class HomeController extends AbstractController
 
         $userId = $user->getId();
         $currentUser = $em->getRepository(User::class)->findOneById($userId);
-        $tickets = $em->getRepository(Ticket::class)->findBy(["owner" => $currentUser]);
+        
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $tickets = $em->getRepository(Ticket::class)->findAll();
+        } else {
+            $tickets = $em->getRepository(Ticket::class)->findBy(["owner" => $currentUser]);
+        }
 
         if (empty($tickets)) {
             return $this->render('home/index.html.twig', [

@@ -32,6 +32,7 @@ class TicketController extends AbstractController
             $message->setTitle($form->get('title')->getData());
             $message->setContent($form->get('content')->getData());
             $ticket->addMessage($message);
+            $ticket->setOwner($this->get('security.token_storage')->getToken()->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($message);
@@ -74,5 +75,46 @@ class TicketController extends AbstractController
             'ticketForm' => $form->createView(),
             'ticket' => $ticket,
         ]);
+    }
+
+    /**
+     * @Route("/ticket/delete/{id}", name="ticket_delete")
+     */
+    public function deleteTicket($id): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ticket = $em->getRepository(Ticket::class)->findOneById($id);
+        
+        if (!$ticket) {
+            throw $this->createNotFoundException('No ticket found');
+        }
+
+        $em->remove($ticket);
+        $em->flush();
+
+        return $this->redirect('/');
+    }
+
+    /**
+     * @Route("/message/delete/{id}", name="ticket_delete")
+     */
+    public function deleteMessage($id): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $message = $em->getRepository(Message::class)->findOneById($id);
+        $ticket = $message->getTicket();
+
+        if (!$message) {
+            throw $this->createNotFoundException('No message found');
+        }
+        
+        if (count($ticket->getMessages()) === 1) {
+            $em->remove($ticket);
+        }
+       
+        $em->remove($message);
+        $em->flush();
+
+        return $this->redirect('/');
     }
 }
