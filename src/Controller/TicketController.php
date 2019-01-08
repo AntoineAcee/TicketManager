@@ -31,6 +31,7 @@ class TicketController extends AbstractController
             $message = new Message();
             $message->setTitle($form->get('title')->getData());
             $message->setContent($form->get('content')->getData());
+            $message->setUser($user);
             $ticket->addMessage($message);
             $ticket->setOwner($this->get('security.token_storage')->getToken()->getUser());
 
@@ -53,6 +54,9 @@ class TicketController extends AbstractController
      */
     public function showTicket(Request $request, $id): Response
     {
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->findOneById($userId);
+
         $em = $this->getDoctrine()->getManager();
         $ticket = $em->getRepository(Ticket::class)->findOneById($id);
         $form = $this->createForm(MessageType::class);
@@ -62,6 +66,7 @@ class TicketController extends AbstractController
             $message = new Message();
             $message->setTitle($form->get('title')->getData());
             $message->setContent($form->get('content')->getData());
+            $message->setUser($user);
             $ticket->addMessage($message);
 
             $entityManager = $this->getDoctrine()->getManager();
