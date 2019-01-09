@@ -102,7 +102,7 @@ class TicketController extends AbstractController
     }
 
     /**
-     * @Route("/message/delete/{id}", name="ticket_delete")
+     * @Route("/message/delete/{id}", name="message_delete")
      */
     public function deleteMessage($id): Response
     {
@@ -122,6 +122,38 @@ class TicketController extends AbstractController
         $em->flush();
 
         return $this->redirect('/');
+    }
+
+    /**
+     * @Route("/message/edit/{id}", name="message_edit")
+     */
+    public function editMessage($id, Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $message = $em->getRepository(Message::class)->findOneById($id);
+        $ticket = $message->getTicket();
+
+        if (!$message) {
+            throw $this->createNotFoundException('No message found');
+        }
+
+        $form = $this->createForm(MessageType::class, $message);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em->persist($message);
+            $em->flush();
+
+            return $this->redirect('/ticket/'.$ticket->getId());
+        }
+
+        return $this->render('ticket/edit_message.html.twig', [
+            'controller_name' => 'TicketController',
+            'editMessage' => $form->createView(),
+            'ticket' => $ticket,
+        ]);
     }
 
     /**

@@ -12,7 +12,7 @@
         {{ form_row(ticketForm.title) }}
         {{ form_row(ticketForm.content) }}
 
-        <button class="btn">Register</button>
+        <button class="btn">Send</button>
     {{ form_end(ticketForm) }}
 
     <ul>
@@ -21,6 +21,7 @@
             <h6>{{ message.title }}</h6>
             <p>{{ message.content }}</p>
             {% if is_granted('ROLE_ADMIN') %}
+                <a href="/message/edit/{{ message.id }}">Edit</a>
                 <a href="/message/delete/{{ message.id }}">Delete</a>
             {% endif %}
         </li>

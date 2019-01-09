@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <h1>Edit Message</h1>
+
+    {{ form_start(editMessage) }}
+        {{ form_row(editMessage.title) }}
+        {{ form_row(editMessage.content) }}
+
+        <button class="btn">Edit this message</button>
+    {{ form_end(editMessage) }}
+{% endblock %}
