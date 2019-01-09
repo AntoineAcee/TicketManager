@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/ticket.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-secondary" href="/add/user/{{ ticket.id }}">Assign new user</a><hr>
+    {% endif %}
+    
+    <div class="col-md-12 blog-main">
+        <table class="table table-hover">
+        {% for message in ticket.messages %}
+            <tr class="row">
+                <td class="table-content">
+                    <a href="ticket/{{ message.ticket.id }}">
+                        <h6>{{ message.title }}</h6>
+                        <p>{{ message.content }}</p>
+                    </a>
+                    <blockquote>Send by {{ message.user }}</blockquote>
+                </td>
+                <td class="table-action">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="/message/edit/{{ message.id }}"><i class="fas fa-pencil-alt"></i></a>
+                        <a href="/message/delete/{{ message.id }}"><i class="fas fa-trash-alt"></i></a>
+                    {% endif %}
+                </td>
+        {% endfor %}
+        </table>
+    </div>
+    <hr>
+
+    {{ form_start(ticketForm) }}
+        {{ form_widget(ticketForm.title) }}
+        {{ form_widget(ticketForm.content) }}
+
+        <button class="btn">Send</button>
+    {{ form_end(ticketForm) }}
+
+{% endblock %}

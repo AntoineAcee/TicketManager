@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         
         if ($user === 'anon.') {
             return $this->render('home/index.html.twig', [
-                'controller_name' => 'HomeController',
+                'route_name' => 'Home',
             ]);
         }
         
@@ -38,7 +38,7 @@ class HomeController extends AbstractController
 
         if (empty($tickets)) {
             return $this->render('home/index.html.twig', [
-                'controller_name' => 'HomeController',
+                'route_name' => 'Home',
                 'curentUser' => $currentUser->getEmail(),
                 'tickets' => $tickets,
             ]);
@@ -49,7 +49,7 @@ class HomeController extends AbstractController
         }
 
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'route_name' => 'Home',
             'curentUser' => $currentUser->getEmail(),
             'tickets' => $tickets,
             'firstMessages' => $firstMessages,

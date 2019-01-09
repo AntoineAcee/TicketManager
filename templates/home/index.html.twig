@@ -1,27 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/ticket.css') }}">
+{% endblock %}
 
 {% block body %}
-<div class="ticket-list">
-    <h1>Home</h1>
-
+<div class="row">
     {% if tickets is defined and tickets is not empty %}
-        <ul>
-        {% for message in firstMessages %}
-            <a href="ticket/{{ message.ticket.id }}">
-            <li>
-                <h6>{{ message.title }}</h6>
-                <p>{{ message.content }}</p>
-            </li>
-            </a>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="ticket/delete/{{ message.ticket.id }}">Delete</a>
-            {% endif %}
-        {% endfor %}
-        </ul>
+        <div class="col-md-12 blog-main">
+            <table class="table table-hover">
+            {% for message in firstMessages %}
+                <tr class="row">
+                    <td class="table-content">
+                        <a href="ticket/{{ message.ticket.id }}">
+                            <h6>{{ message.title }}</h6>
+                            <p>{{ message.content }}</p>
+                        </a>
+                        <blockquote>Send by {{ message.user }}</blockquote>
+                    </td>
+                    <td class="table-action">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="ticket/delete/{{ message.ticket.id }}"><i class="fas fa-trash-alt"></i></a>
+                        {% endif %}
+                    </td>
+            {% endfor %}
+            </table>
+        </div>
+    {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>Vous n'avez pas encore de tickets n'hésitez pas à en créer un <a href="{{ '/ticket/new' }}">ici</a> !</p>ù
     {% else %}
-        <p>Vous n'avez pas encore de tickets n'hésitez pas à en créer un <a href="{{ '/ticket/new' }}">ici</a> !</p>
+        <p>Vous n'êtes pas encore de connecté n'hésitez pas à vous <a href="{{ '/login' }}">connecter</a> ou vous <a href="{{ '/register' }}">inscrire</a> !</p>
     {% endif %}
 </div>
 {% endblock %}

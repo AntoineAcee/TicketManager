@@ -1,0 +1,11 @@
+.table {
+    width: 100%;
+}
+
+.table .table-content {
+    width:90%;
+}
+
+.table .table-action {
+    width:10%;
+}

@@ -45,7 +45,7 @@ class TicketController extends AbstractController
         }
             
         return $this->render('ticket/new_ticket.html.twig', [
-            'controller_name' => 'TicketController',
+            'route_name' => 'New ticket',
             'ticketForm' => $form->createView(),
         ]);
     }
@@ -76,8 +76,8 @@ class TicketController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->render('ticket/index.html.twig', [
-            'controller_name' => 'TicketController',
+        return $this->render('ticket/show_ticket.html.twig', [
+            'route_name' => 'Ticket n°'.$ticket->getId(),
             'ticketForm' => $form->createView(),
             'ticket' => $ticket,
         ]);
@@ -109,7 +109,7 @@ class TicketController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $message = $em->getRepository(Message::class)->findOneById($id);
         $ticket = $message->getTicket();
-
+        
         if (!$message) {
             throw $this->createNotFoundException('No message found');
         }
@@ -121,7 +121,7 @@ class TicketController extends AbstractController
         $em->remove($message);
         $em->flush();
 
-        return $this->redirect('/');
+        return $this->redirect('/ticket/'. $ticket->getId());
     }
 
     /**
@@ -150,7 +150,7 @@ class TicketController extends AbstractController
         }
 
         return $this->render('ticket/edit_message.html.twig', [
-            'controller_name' => 'TicketController',
+            'route_name' => 'Edit Message',
             'editMessage' => $form->createView(),
             'ticket' => $ticket,
         ]);
@@ -180,7 +180,7 @@ class TicketController extends AbstractController
         }
 
         return $this->render('ticket/add_user_ticket.html.twig', [
-            'controller_name' => 'TicketController',
+            'route_name' => 'Add a user',
             'addUserTicketForm' => $form->createView(),
         ]);
     }

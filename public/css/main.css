@@ -1,0 +1,14 @@
+.main {
+    margin: 0 10%;    
+}
+
+.container {
+    width: 100%;
+    background: #00749C;
+    max-width: 100%;
+    
+}
+
+.container * {
+    color: #EEE;
+}

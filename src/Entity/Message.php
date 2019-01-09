@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
@@ -37,6 +39,12 @@ class Message
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @Assert\DateTime
+     * @var string A "Y-m-d H:i:s" formatted value
+     */
+    protected $createdAt;
 
     public function getId(): ?int
     {

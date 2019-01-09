@@ -16,24 +16,6 @@ use App\Form\RegisterType;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/security", name="security")
-     */
-    public function index()
-    {
-        $user = $this->getUser();
-
-        if ($user) {
-            return $this->render('home/index.html.twig', [
-                'controller_name' => 'HomeController',
-            ]);
-        } else {
-            return $this->render('security/index.html.twig', [
-                'controller_name' => 'SecurityController',
-            ]);
-        }
-    }
-
-    /**
      * @Route("/register", name="register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
@@ -59,7 +41,7 @@ class SecurityController extends AbstractController
         }
             
         return $this->render('security/register.html.twig', [
-            'controller_name' => 'SecurityController',
+            'route_name' => 'Register',
             'registerForm' => $form->createView(),
         ]);
     }
@@ -75,6 +57,7 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
+            'route_name' => 'Login',
             'last_username' => $lastUsername,
             'error' => $error
         ]);
