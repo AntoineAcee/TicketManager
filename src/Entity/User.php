@@ -45,6 +45,11 @@ class User implements UserInterface
      */
     private $messages;
 
+    public function __toString()
+    {
+        return $this->email;
+    }
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();

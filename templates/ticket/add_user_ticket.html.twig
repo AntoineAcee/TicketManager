@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <h1>New User</h1>
+
+    {{ form_start(addUserTicketForm) }}
+        {{ form_row(addUserTicketForm.users) }}
+
+        <button class="btn">Add this user</button>
+    {{ form_end(addUserTicketForm) }}
+{% endblock %}

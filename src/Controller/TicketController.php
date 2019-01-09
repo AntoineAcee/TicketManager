@@ -11,6 +11,7 @@ use App\Entity\Ticket;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\MessageType;
+use App\Form\AddUserTicketType;
 
 class TicketController extends AbstractController
 {
@@ -121,5 +122,34 @@ class TicketController extends AbstractController
         $em->flush();
 
         return $this->redirect('/');
+    }
+
+    /**
+     * @Route("/add/user/{id}", name="add_user_ticket")
+     */
+    public function addUserTicket($id, Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ticket = $em->getRepository(Ticket::class)->findOneById($id);
+
+        if (!$ticket) {
+            throw $this->createNotFoundException('No ticket found');
+        }
+
+        $form = $this->createForm(AddUserTicketType::class, $ticket, ['ticket' => $ticket]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ticket->addUser($form->get('users')->getData());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ticket);
+            $entityManager->flush();
+        }
+
+        return $this->render('ticket/add_user_ticket.html.twig', [
+            'controller_name' => 'TicketController',
+            'addUserTicketForm' => $form->createView(),
+        ]);
     }
 }

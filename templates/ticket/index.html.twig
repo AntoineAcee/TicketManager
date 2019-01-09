@@ -4,6 +4,9 @@
 
 {% block body %}
     <h1>Ticket {{ ticket.id }}</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="/add/user/{{ ticket.id }}">Add User</a>
+    {% endif %}
 
     {{ form_start(ticketForm) }}
         {{ form_row(ticketForm.title) }}

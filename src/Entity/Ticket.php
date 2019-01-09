@@ -38,6 +38,7 @@ class Ticket
     {
         $this->users = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $ticketId = null;
     }
 
     public function getId(): ?int
