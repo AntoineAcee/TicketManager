@@ -41,14 +41,32 @@ class Message
     private $user;
 
     /**
-     * @Assert\DateTime
-     * @var string A "Y-m-d H:i:s" formatted value
+     * @var datetime $createdAt
+     *
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
+    /**
+     * @var datetime $updatedAt
+     * 
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    protected $updatedAt;
+
+    /**
+     * Gets triggered only on insert
+
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime("now");
+    }
+
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(new \DateTime("now"));
     }
 
     public function getId(): ?int
@@ -104,15 +122,45 @@ class Message
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTime
-    {
-        return $this->createdAt;        
-    }
-
-    public function setCreatedAt(DateTime $createdAt): self
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     */
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
 
-        return $this;
+    /**`enter code here`
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

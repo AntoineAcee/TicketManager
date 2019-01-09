@@ -14,11 +14,14 @@
         {% for message in ticket.messages %}
             <tr class="row">
                 <td class="table-content">
-                    <a href="ticket/{{ message.ticket.id }}">
-                        <h6>{{ message.title }}</h6>
-                        <p>{{ message.content }}</p>
-                    </a>
-                    <blockquote>Send by {{ message.user }}</blockquote>
+                    <h6>{{ message.title }}</h6>
+                    <p>{{ message.content }}</p>
+                    <div class="info">
+                        {% if message.updatedAt is not null %}
+                            <p>(edit at {{message.updatedAt|date("m/d/Y H:i")}})</p>
+                        {% endif %}
+                        <p>Send by {{ message.user }}</p>
+                    </div>
                 </td>
                 <td class="table-action">
                     {% if is_granted('ROLE_ADMIN') %}

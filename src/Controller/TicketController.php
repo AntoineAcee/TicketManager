@@ -142,7 +142,7 @@ class TicketController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $message->setUpdatedAt(new \DateTime("now"));
             $em->persist($message);
             $em->flush();
 
