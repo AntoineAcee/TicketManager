@@ -46,6 +46,11 @@ class Message
      */
     protected $createdAt;
 
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,6 +100,18 @@ class Message
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTime
+    {
+        return $this->createdAt;        
+    }
+
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
