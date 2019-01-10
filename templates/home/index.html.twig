@@ -27,7 +27,7 @@
             </table>
         </div>
     {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-        <p>Vous n'avez pas encore de tickets n'hésitez pas à en créer un <a href="{{ '/ticket/new' }}">ici</a> !</p>ù
+        <p>Vous n'avez pas encore de tickets n'hésitez pas à en créer un <a href="{{ '/ticket/new' }}">ici</a> !</p>
     {% else %}
         <p>Vous n'êtes pas encore de connecté n'hésitez pas à vous <a href="{{ '/login' }}">connecter</a> ou vous <a href="{{ '/register' }}">inscrire</a> !</p>
     {% endif %}
